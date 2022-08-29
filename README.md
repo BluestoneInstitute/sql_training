@@ -2,7 +2,10 @@
 
 Structured Query Language or “SQL” is a scripting language used to query databases. Invented in the 1970s by IBM, it is now ubiquitous with versions available in statistical software like SAS (PROC SQL) and R (sqldf). Other software like Stata (odbc) and Python (pyodbc) allow you to connect to a SQL server and run queries on the data stored there. These are not the only use cases for SQL; there are many, many more. 
 
-## Basics SQL Syntax
+### Videos
+* [What is SQL? SQL for Beginners 2022 – Learn SQL Step by Step](https://www.youtube.com/watch?v=dFywO9lQ6MQ) (59 seconds)
+
+### Basics SQL Syntax
 SQL is a pretty intuitive language. You basically type what you're thinking. There are 3 main keywords included as part of a SQL query:
 
 * SELECT - list the column(s) you want to retrieve
@@ -24,7 +27,7 @@ WHERE fieldname100 >= 10
 > **BEST PRACTICE:**
 > Add comments to SQL queries by adding '--' before a statement.
 
-## Other Useful Keywords
+### Other Useful Keywords
 
 The SQL language has a multitude of other keywords. Some of the most commonly used include:
 
@@ -42,15 +45,13 @@ The SQL language has a multitude of other keywords. Some of the most commonly us
 
 ##### Notes: [W3 Schools SQL Keywords Reference](https://www.w3schools.com/sql/sql_ref_keywords.asp)
 
-## _NULL_ Values
+### _NULL_ Values
 SQL databases include have a special class of values called "NULL". In SQL, NULL is a special _marker_ used to indicate that a data _value_ does not exist in the database. Because NULL is a _marker_ and not a _value_ it is possible for an analysis to yield different results when NULL values are included versus excluded. Moreover, data analysts familiar with SAS or Stata may find NULLs counterintuitive.  This is because neither SAS nor Stata use NULL values and instead treat missing data as "." (for numeric values) or "" (for character values).
 
 The existence of the NULL marker is somewhat [controversial](https://en.wikipedia.org/wiki/Null_(SQL)#Controversy). And "misunderstanding how NULL works is the cause of a great number of errors in SQL code."
 
 > **BEST PRACTICE NOTE:**
 > Always be alert to the potential for NULL values in a SQL database.
-
-#### 
 
 ## SQL Resources
 
