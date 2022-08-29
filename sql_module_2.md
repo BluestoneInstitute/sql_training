@@ -2,19 +2,7 @@
 
 This SQL module will focus on the version of SQL used in R’s sqldf package. The examples and sample code shown throughout the SQL Modules can typically be adapted to other software that includes SQL (e.g., Microsoft SQL Server) with just a few changes.  This is because many “flavors” of SQL are based on T-SQL or “Transact-SQL.”
 
-After a brief introduction to sqldf the module will follow the data analyst’s workflow.
-
-#### Data Analyst Workflow
-
-The figure below provides a reasonable visual representation of the data analyst's workflow.  The first step is **Importing** the data into the data analyst's preferred software package.  The second step is **Tidying** the data.  This step is sometimes referred to as "munging" or "wrangling" but they all generally mean the same thing:  preparing the data for analysis.  The remaining time is spent **Exploring** the data, often through summary statistics, regressions, or more advanced techniques like Machine Learning and Artificial Intelligence.  The final step is to **Communicate** insights through figures, charts, tables, and other visuals.
-
-The true workflow is not as linear as the figure implies.  Nevertheless, it provides a useful framework for how to approach a project and for learning a new software package.  
-
-![Data](https://d33wubrfki0l68.cloudfront.net/795c039ba2520455d833b4034befc8cf360a70ba/558a5/diagrams/data-science-explore.png)
-
-##### Notes:  Wickham, Hadley, and Garrett Grolemund. R for data science: import, tidy, transform, visualize, and model data. " O'Reilly Media, Inc.", 2016. (available at https://r4ds.had.co.nz/). #####
-
-Programming often follows the Pareto Principle:  80% of the work can be done by 20% (or less) of the available features.  This module is designed to introduce the fewest number of concepts necessary to be proficient on the vast majority of tasks.
+The next section of the module reviews the sqldf package in R. Next it (re)introduces the Data Analyst's Workflow. The remaining sections of this module will follow the Data Analyst's Workflow to introduce basic SQL concepts. By the end of this module you should be able to implement query an R dataframe using SQL.
 
 ## The sqldf Package in R
 
@@ -71,6 +59,18 @@ The order of the statements SELECT…FROM…WHERE is very important. A query whe
 
 
 * [Basic sql with sqldf in R](https://www.youtube.com/watch?v=TRGLODyf-6s) (4:35)
+
+## Data Analyst Workflow
+
+The figure below provides a reasonable visual representation of the data analyst's workflow.  The first step is **Importing** the data into the data analyst's preferred software package.  The second step is **Tidying** the data.  This step is sometimes referred to as "munging" or "wrangling" but they all generally mean the same thing:  preparing the data for analysis.  The remaining time is spent **Exploring** the data, often through summary statistics, regressions, or more advanced techniques like Machine Learning and Artificial Intelligence.  The final step is to **Communicate** insights through figures, charts, tables, and other visuals.
+
+The true workflow is not as linear as the figure implies.  Nevertheless, it provides a useful framework for how to approach a project and for learning a new software package.  
+
+![Data](https://d33wubrfki0l68.cloudfront.net/795c039ba2520455d833b4034befc8cf360a70ba/558a5/diagrams/data-science-explore.png)
+
+##### Notes:  Wickham, Hadley, and Garrett Grolemund. R for data science: import, tidy, transform, visualize, and model data. " O'Reilly Media, Inc.", 2016. (available at https://r4ds.had.co.nz/). #####
+
+Programming often follows the Pareto Principle:  80% of the work can be done by 20% (or less) of the available features.  This module is designed to introduce the fewest number of concepts necessary to be proficient on the vast majority of tasks.
 
 ## Import
 Because sqldf uses dataframes you will likely import your data through R packages like read_csv or read_tsv. However, you may not always use SQL in R so it is useful to understand how to add data using SQL syntax.
