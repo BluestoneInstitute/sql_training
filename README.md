@@ -19,6 +19,7 @@ FROM _tablename_
 WHERE _fieldname100_ == _value_
 --value can be text ‘value’ or value depending on the type of data contained in fieldname100.
 ```
+* _Optional_: [Learn SQL: SQL Order of Operations](https://learnsql.com/blog/sql-order-of-operations/)
 
 > **BEST PRACTICE:**
 > Add comments to SQL queries by adding '--' before a statement.
@@ -40,8 +41,6 @@ The SQL language has a multitude of other keywords. Some of the most commonly us
 * CASE - creates different outputs based on conditions
 
 ##### Notes: [W3 Schools SQL Keywords Reference](https://www.w3schools.com/sql/sql_ref_keywords.asp)
-
-* _Optional_: [Learn SQL: SQL Order of Operations](https://learnsql.com/blog/sql-order-of-operations/)
 
 ## _NULL_ Values
 SQL databases include have a special class of values called "NULL". In SQL, NULL is a special _marker_ used to indicate that a data _value_ does not exist in the database. Because NULL is a _marker_ and not a _value_ it is possible for an analysis to yield different results when NULL values are included versus excluded. Moreover, data analysts familiar with SAS or Stata may find NULLs counterintuitive.  This is because neither SAS nor Stata use NULL values and instead treat missing data as "." (for numeric values) or "" (for character values).
