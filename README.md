@@ -14,21 +14,20 @@ SQL is a pretty intuitive language. You basically type what you're thinking. The
 The order of the commands are written matters. For example SELECT always must precede FROM and WHERE must always follow FROM. The SQL query will not run if the keywords are entered out of order. A common SQL command will have the following order of keywords:
 
 ```sql
-SELECT _fieldname1, _fieldname2, ... _fieldname100
-FROM _tablename
-WHERE _fieldname100 == _value
---value can be text ‘_value’ or value depending on the type of data contained in _fieldname100.
+SELECT _fieldname1_, _fieldname2_, ... _fieldname100_
+FROM _tablename_
+WHERE _fieldname100_ == _value_
+--value can be text ‘value’ or value depending on the type of data contained in fieldname100.
 ```
 
 
 > **BEST PRACTICE:**
 > When writing SQL code (or for any coding language) keep in mind the following best practices:
-> -   Always save your SQL queries in a series of code called a “script”
-> -   Include the purpose of the script, your name, the date the script was originally written and run, and the date of any later updates
+> -   Always save your SQL queries in a program or "script"
 > -   Include comments throughout the script to explain what each individual query does
-> -   Include a comment for results and/or conclusions after each query in the script 
+> -   After each query in a script include a comment for results and/or conclusions 
 
-* _Optional: [Learn SQL: SQL Order of Operations](https://learnsql.com/blog/sql-order-of-operations/)
+* _Optional_: [Learn SQL: SQL Order of Operations](https://learnsql.com/blog/sql-order-of-operations/)
 
 ## Other Useful Keywords
 
