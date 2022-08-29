@@ -13,11 +13,13 @@ SQL is a pretty intuitive language. You basically type what you're thinking. The
 
 The order of the commands are written matters. For example SELECT always must precede FROM and WHERE must always follow FROM. The SQL query will not run if the keywords are entered out of order. A common SQL command will have the following order of keywords:
 
-```r
+```sql
 SELECT _fieldname1, _fieldname2, ... _fieldname100
 FROM _tablename
 WHERE _fieldname100 == _value
 --value can be text ‘_value’ or value depending on the type of data contained in _fieldname100.
+```
+
 
 > **BEST PRACTICE:**
 > When writing SQL code (or for any coding language) keep in mind the following best practices:
@@ -54,10 +56,8 @@ The existence of the NULL marker is somewhat [controversial](https://en.wikipedi
 > **BEST PRACTICE NOTE:**
 > Always be alert to the potential for NULL values in a SQL database.
 
-
 #### 
 
-## SQL References
+## SQL Resources
 
 [SQL Cheat Sheet](https://www.sqltutorial.org/wp-content/uploads/2016/04/SQL-cheat-sheet.pdf)
-
