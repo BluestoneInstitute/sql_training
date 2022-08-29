@@ -14,9 +14,9 @@ SQL is a pretty intuitive language. You basically type what you're thinking. The
 The order in which the commands are written matters. For example SELECT always must precede FROM and WHERE must always follow FROM. The SQL query will not run if the keywords are entered out of order. A common SQL command will have the following order of keywords:
 
 ```sql
-SELECT _fieldname1_, _fieldname2_, ... _fieldname100_
-FROM _tablename_
-WHERE _fieldname100_ == _value_
+SELECT fieldname1, fieldname2, ..., fieldname100
+FROM tablename
+WHERE fieldname100 >= 10
 --value can be text ‘value’ or value depending on the type of data contained in fieldname100.
 ```
 * _Optional_: [Learn SQL: SQL Order of Operations](https://learnsql.com/blog/sql-order-of-operations/)
