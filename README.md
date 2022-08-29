@@ -11,7 +11,7 @@ SQL is a pretty intuitive language. You basically type what you're thinking. The
 
 ##### Notes: [W3 Schools SQL Keywords Reference](https://www.w3schools.com/sql/sql_ref_keywords.asp)
 
-The order of the commands are written matters. For example SELECT always must precede FROM and WHERE must always follow FROM. The SQL query will not run if the keywords are entered out of order. A common SQL command will have the following order of keywords:
+The order in which the commands are written matters. For example SELECT always must precede FROM and WHERE must always follow FROM. The SQL query will not run if the keywords are entered out of order. A common SQL command will have the following order of keywords:
 
 ```sql
 SELECT _fieldname1_, _fieldname2_, ... _fieldname100_
@@ -47,7 +47,7 @@ The SQL language has a multitude of other keywords. Some of the most commonly us
 
 ##### Notes: [W3 Schools SQL Keywords Reference](https://www.w3schools.com/sql/sql_ref_keywords.asp)
 
-## NULL VALUES
+## _NULL_ Values
 SQL databases include have a special class of values called "NULL". In SQL, NULL is a special _marker_ used to indicate that a data _value_ does not exist in the database. Because NULL is a _marker_ and not a _value_ it is possible for an analysis to yield different results when NULL values are included versus excluded. Moreover, data analysts familiar with SAS or Stata may find NULLs counterintuitive.  This is because neither SAS nor Stata use NULL values and instead treat missing data as "." (for numeric values) or "" (for character values).
 
 The existence of the NULL marker is somewhat [controversial](https://en.wikipedia.org/wiki/Null_(SQL)#Controversy). And "misunderstanding how NULL works is the cause of a great number of errors in SQL code."
