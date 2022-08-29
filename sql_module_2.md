@@ -4,7 +4,7 @@ This SQL module will focus on the version of SQL used in R’s sqldf package. Th
 
 After a brief introduction to sqldf the module will follow the data analyst’s workflow.
 
-#### **Data Analyst Workflow**
+#### Data Analyst Workflow
 
 The figure below provides a reasonable visual representation of the data analyst's workflow.  The first step is **Importing** the data into the data analyst's preferred software package.  The second step is **Tidying** the data.  This step is sometimes referred to as "munging" or "wrangling" but they all generally mean the same thing:  preparing the data for analysis.  The remaining time is spent **Exploring** the data, often through summary statistics, regressions, or more advanced techniques like Machine Learning and Artificial Intelligence.  The final step is to **Communicate** insights through figures, charts, tables, and other visuals.
 
