@@ -37,15 +37,15 @@ df <- as.data.frame(df)
 > **BEST PRACTICE NOTE:**  
 > The R packages dplyr and sqldf have very similar capabilities. Depending upon the use case, dplyr may be a better option than sqldf and vice versa.
 
-Almost every SQL query you will write will include a SELECT statement and a FROM statement.  The SELECT statement is followed by a list of fields that you want the resulting dataframe to contain.  The FROM statement is followed by a list of databases that you want to query. For example, if you want to create a new dataframe 'mpgdf' containing only the column 'mpg' from the 'mtcars' data frame that is included in base R you would write:
+Almost every SQL query you will write will include a SELECT keyword and a FROM keyword.  The SELECT keyword is followed by a list of fields that you want the resulting dataframe to contain.  The FROM keyword is followed by a list of databases that you want to query. For example, if you want to create a new dataframe 'mpgdf' containing only the column 'mpg' from the 'mtcars' data frame that is included in base R you would write:
 
 ```r
 install.packages("sqldf")
 library(sqldf)
 df <- mtcars
 mpg <- sqldf(
-  "SELECT mpg 
-  FROM df"
+    "SELECT mpg 
+    FROM df"
   )
 -- [[insert number of observations]]
 head(mpg)
@@ -56,10 +56,14 @@ head(mpg)
 > Always record the number of rows returned from each query at the bottom to help Quality Control work. To do this use '--' to comment out individual lines. Use /* to open and */ to close multiple line comments.
 
 
-A WHERE keyword allows you to include only those records that satisfy a certain condition. Importantly, the FROM and WHERE keywords are activated at the beginning of the SQL query so that only those records that satisfy the WHERE condition are processed as part of the select statement. For example, if you wanted to create a data frame that only includes cars with 25 or more mpg you could specify:
+A WHERE keyword allows you to include only those records that satisfy a certain condition. Importantly, the FROM and WHERE keywords are activated at the beginning of the SQL query so that only those records that satisfy the WHERE condition are processed as part of the SELECT keyword. For example, if you wanted to create a data frame that only includes cars with 25 or more mpg you could specify:
 
 ```r
-mpg25 <- sqldf("SELECT * FROM df WHERE mpg >= 25")
+mpg25 <- sqldf(
+    "SELECT * 
+    FROM df 
+    WHERE mpg >= 25"
+  )
 print(mpg25)
 ```
 
@@ -70,29 +74,9 @@ The order of the statements SELECT…FROM…WHERE is very important. A query whe
 * [Basic sql with sqldf in R](https://www.youtube.com/watch?v=TRGLODyf-6s) (4:35)
 
 ## Import
-Because sqldf uses dataframes you will likely import your data through packages like read_csv or read_tsv. However, you may not always use SQL in R so it is useful to understand how to add data using SQL syntax.
-Inserting Data into a SQL Database
+Because sqldf uses dataframes you will likely import your data through R packages like read_csv or read_tsv. However, you may not always use SQL in R so it is useful to understand how to add data using SQL syntax.
 
-
-Stacking Data with UNION and UNION ALL
-
-
-## Wrangle
-
-Frequencies
-Descriptive Statistics
-Creating Subsets of Data
-Casting Variables
-Analyze
-Communicate
-
-SQL is a querying language. It does not, by itself, have graphics or visualization capabilities. For this reason, output of SQL query is often “moved” to a different software package (e.g., ggplot2 in R, or Excel in order to communicate the results.
-Optional
-Coalesce
-Casting
-
- 
-UNION and UNION ALL
+### Inserting Data into a SQL Database
 
 > library(sqldf)
 > BOD
@@ -112,10 +96,26 @@ UNION and UNION ALL
 3    3   19.0
 
 
+### Stacking Data with UNION and UNION ALL
+
+
+## Wrangle
+#### Creating Subsets of Data
+#### Casting Variables
+
+## Analyze
+#### Frequencies
+#### Descriptive Statistics
+
+## Communicate
+
+SQL is a querying language. It does not, by itself, have graphics or visualization capabilities. For this reason, output of SQL query is often “moved” to a different software package (e.g., ggplot2 in R, or Excel in order to communicate the results.
+
+## Other Important Concepts (Optional)
+COALESCE - [[]]
 HAVING - command is used instead of WHERE with aggregate functions
 
-
-https://www.w3schools.com/sql/sql_quickref.asp
+Source: https://www.w3schools.com/sql/sql_quickref.asp
 
 
 > **BEST PRACTICE:**
