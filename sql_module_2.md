@@ -1,8 +1,8 @@
-# SQL Module 2:  Using SQL in R’s SQLDF Package 
+# SQL Module 2:  Using SQL in R’s sqldf Package 
 
 This SQL module will focus on the version of SQL used in R’s sqldf package. The examples and sample code shown throughout the SQL Modules can typically be adapted to other software that includes SQL (e.g., Microsoft SQL Server) with just a few changes.  This is because many “flavors” of SQL are based on T-SQL or “Transact-SQL.”
 
-The next section of the module reviews the sqldf package in R. Next it (re)introduces the Data Analyst's Workflow. The remaining sections of this module will follow the Data Analyst's Workflow to introduce basic SQL concepts. By the end of this module you should be able to implement query an R dataframe using SQL.
+The next section of the module introduces the sqldf package in R. Next it (re)introduces the Data Analyst's Workflow. The remaining sections of this module will follow the Data Analyst's Workflow to introduce basic SQL concepts. By the end of this module you should be able to implement query an R dataframe using SQL.
 
 ## The sqldf Package in R
 
@@ -29,12 +29,15 @@ Almost every SQL query you will write will include a SELECT keyword and a FROM k
 ```r
 install.packages("sqldf")
 library(sqldf)
+
 df <- mtcars
+
 mpg <- sqldf(
     "SELECT mpg 
-    FROM df"
+    FROM df
+    -- 32 observations"
   )
--- [[insert number of observations]]
+
 head(mpg)
 ```
 
@@ -49,12 +52,13 @@ A WHERE keyword allows you to include only those records that satisfy a certain 
 mpg25 <- sqldf(
     "SELECT * 
     FROM df 
-    WHERE mpg >= 25"
+    WHERE mpg >= 25
+    -- 6 observations"
   )
 print(mpg25)
 ```
 
-The asterisk '*' allows you to SELECT all columns in the data frame without having to name all of the columns in the data frame.
+The asterisk '*' allows you to select all columns in the data frame without having to name all of the columns in the data frame.
 The order of the statements SELECT…FROM…WHERE is very important. A query where the statements are out of order (e.g., SELECT * WHERE mpg >= 25 FROM df) will result in an error.
 
 
