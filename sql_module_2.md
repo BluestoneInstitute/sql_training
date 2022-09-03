@@ -157,25 +157,25 @@ A JOIN (aka merge) of two datasets is another way to combine datasets in SQL. Th
 * LEFT JOIN - Likely this will be the JOIN used most frequently. Returns all rows from the left table, and the matching rows from the right table. 
 
 <p align="center">
-  <img src="https://www.w3schools.com/sql/img_leftjoin.gif" alt="Venn Diagram - LEFT JOIN" width = "400" height="auto">
+  <img src="https://www.w3schools.com/sql/img_leftjoin.gif" alt="Venn Diagram - LEFT JOIN">
 </p>
 
 * RIGHT JOIN - Returns all rows from the right table, and the matching rows from the left table.
 
 <p align="center">
-  <img src="https://www.w3schools.com/sql/img_rightjoin.gif" alt="Venn Diagram - RIGHT JOIN" width = "400" height="auto">
+  <img src="https://www.w3schools.com/sql/img_rightjoin.gif" alt="Venn Diagram - RIGHT JOIN">
 </p>
 
 * JOIN - Joins tables together
 
 <p align="center">
-  <img src="https://www.w3schools.com/sql/img_innerjoin.gif" alt="Venn Diagram - JOIN" width = "400" height="auto">
+  <img src="https://www.w3schools.com/sql/img_innerjoin.gif" alt="Venn Diagram - JOIN">
 </p>
 
 * FULL OUTER JOIN - Returns all rows when there is a match in either left table or right table.
 
 <p align="center">
-  <img src="https://www.w3schools.com/sql/img_fulljoin.gif" alt="Venn Diagram - FULL (OUTER) JOIN" width = "400" height="auto">
+  <img src="https://www.w3schools.com/sql/img_fulljoin.gif" alt="Venn Diagram - FULL (OUTER) JOIN">
 </p>
 
 ##### Notes: https://www.w3schools.com/sql/sql_join.asp.
@@ -256,7 +256,7 @@ full_join <- sqldf("
 JOINS can have additional functionality by including either INNER or OUTER to JOIN along with a few other conditions. Illustrations of this can be found in the graphic below.
 
 <p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/SQL_Joins.svg" alt="Venn Diagram of SQL Joins" width = "500" height="auto">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/SQL_Joins.svg" alt="Venn Diagram of SQL Joins">
 </p>
 
 
