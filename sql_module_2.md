@@ -114,11 +114,84 @@ Because sqldf uses dataframes you will likely first import your data through R p
 
 ### Stacking Data with UNION and UNION ALL
 
-[[fill in]]
+Stacking two or more datasets together in SQL is called a UNION. Somewhat confusingly there are two ways to do this, UNION and UNION ALL. UNION stacks the datasets together but only keeps _unique_ rows from both datasets.  UNION ALL stacks the datasets together and keeps _all_ rows from both datasets, even duplicates. Most of the time you will want to use UNION ALL rather than UNION. This is because duplicate values may not, in fact, be observations you want to drop.
+
+> **BEST PRACTICE NOTE:**
+> It is *very* easy for new programmers to mistakenly type UNION rather than UNION ALL (and vice versa). Including comments in your code that indicate row counts for each dataset allows for a simple check. For example, say you are trying to stack data set "a" with dataset "b" to create dataset "c." If the resulting dataset "c" has fewer rows than "a" rows + "b" rows and that isn't what you expected you will quickly be alerted to a potential problem.
+
+To illustrate the difference between UNION and UNION ALL we are going to create two subsets of the USArrests data. The first subset will include the first 30 observations. The second subset will include the last 30 observations. This means there will be 10 observations that appear in both datasets.
+
+```r
+library(sqldf)
+library(dplyr)
+library(tibble)
+
+us_arrests <- USArrests %>%
+  rownames_to_column(var = 'State')
+
+first30 <- us_arrests %>% select (State) %>% slice_head(n=30) %>% arrange(State)
+last30 <- us_arrests %>% select (State) %>% slice_tail(n=30) %>% arrange(State)
+
+stack_union <- sqldf("
+        SELECT * FROM first30
+
+                UNION
+
+        SELECT * FROM last30
+        -- dataset has 50 observations, 3 columns
+")
+
+stack_unionall <- sqldf("
+        SELECT * FROM first30
+
+                UNION ALL
+
+        SELECT * FROM last30
+        -- dataset has 60 observations, 3 columns
+")
+```
 
 ### JOINs
+A JOIN (aka merge) of two datasets is another way to combine datasets in SQL. There are multiple different types of joins:
+
+JOIN [[]]
+LEFT JOIN [[]]
+RIGHT JOIN [[]]
+FULL JOIN [[]]
+
+It is easy to understand the differences with a Venn diagram.
+
+<p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/SQL_Joins.svg" alt="Venn Diagram of SQL Joins" width = "300" height="auto">
+</p>
+
+You will use a different type of JOIN depending upon what you want to accomplish. To illustrate, we will again divide the USArrests data into two parts. This time, however, we will keep the fields State and Murder in first30 and the fields State and Assault in last30. Because State is the common variable, that is variable on which we JOIN the datasets together.
+
+```r
+library(sqldf)
+library(dplyr)
+library(tibble)
+
+us_arrests <- USArrests %>%
+        rowname_to_column(value = 'State')
+
+first30 <- us_arrests %>% select (State, Murder) %>% slice_head(n=30) %>% arrange(State)
+last30 <- us_arrests %>% select (State, Assault) %>% slice_tail(n=30) %>% arrange(State)
+
+# FULL JOIN
+
+# LEFT JOIN
+
+# RIGHT JOIN
+
+# INNER JOIN
+
+# OUTER JOIN
 
 [[fill in]]
+```
+
+By including INNER or OUTER in the JOIN you specify whether or not to include the overlapping portion of the Venn diagram
 
 ## Wrangle
 #### Creating Subsets of Data
