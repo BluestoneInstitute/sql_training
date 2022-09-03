@@ -94,24 +94,7 @@ Because sqldf uses dataframes you will likely first import your data through R p
 
 [[fill]]
 
-> library(sqldf)
-> BOD
-  Time demand
-1    1    8.3
-2    2   10.3
-3    3   19.0
-4    4   16.0
-5    5   15.6
-6    7   19.8
-> New <- BOD[1, ]
-> BOD1 <- BOD[2:3,]
-> sqldf(c("insert into New select * from BOD1", "select * from New"))
-  Time demand
-1    1    8.3
-2    2   10.3
-3    3   19.0
-
-
+## Wrangle
 ### Stacking Data with UNION and UNION ALL
 
 Stacking two or more datasets together in SQL is called a UNION. Somewhat confusingly there are two ways to do this, UNION and UNION ALL. UNION stacks the datasets together but only keeps _unique_ rows from both datasets.  UNION ALL stacks the datasets together and keeps _all_ rows from both datasets, even duplicates. Most of the time you will want to use UNION ALL rather than UNION. This is because duplicate values may not, in fact, be observations you want to drop.
@@ -259,8 +242,6 @@ JOINS can have additional functionality by including either INNER or OUTER to JO
   <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/SQL_Joins.svg" alt="Venn Diagram of SQL Joins" width = 75% height=auto>
 </p>
 
-
-## Wrangle
 #### Creating Subsets of Data
 It is relatively common to analyze or view a subset of data rather than an entire dataset. This can be accomplished in SQL in several different ways. One common way is to include a WHERE keyword in the the SQL query. 
 
@@ -493,13 +474,3 @@ HAVING - command is used instead of WHERE with aggregate functions
 
 
 Source: https://www.w3schools.com/sql/sql_quickref.asp
-
-
-
-
-
-
-
-
-
-
