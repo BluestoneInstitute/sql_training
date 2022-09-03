@@ -116,6 +116,10 @@ Because sqldf uses dataframes you will likely first import your data through R p
 
 [[fill in]]
 
+### JOINs
+
+[[fill in]]
+
 ## Wrangle
 #### Creating Subsets of Data
 It is relatively common to analyze or view a subset of data rather than an entire dataset. This can be accomplished in SQL in several different ways. One common way is to include a WHERE keyword in the the SQL query. 
@@ -181,15 +185,78 @@ Other useful logical operators (i.e., those where the result is TRUE or NOT TRUE
 
 ##### Notes: https://www.w3schools.com/sql/sql_operators.asp
 
-#### CASE-WHEN
+#### The CASE Expression
 
-[[fill in]]
+There are occasions where you will want to create a new variable where the contents are conditional on the contents of another variable. This can be accomplished using the CASE expression. The CASE expression goes through conditions and returns a value when the first condition is met (like an if-then-else statement). So, once a condition is true, it will stop reading and return the result. If no conditions are true, it returns the value in the ELSE clause.
+
+If there is no ELSE part and no conditions are true, it returns NULL.
+
+For example, you may want to create a variable that contains the census region for each state.
+
+```r
+us_arrests <- USArrests %>%
+  rownames_to_column(var = "State")
+
+df <- sqldf("
+  SELECT * 
+    , CASE
+        WHEN state IN ('Hawaii', 'Alaska') THEN 'Pacific'
+        WHEN state IN ('Washington', 'Oregon','California', 'Idaho', 'Montana', 'Wyoming', 'Nevada', 'Utah', 'Colorado', 'Arizona', 'New Mexico') THEN 'West'
+        WHEN state IN ('North Dakota', 'South Dakota', 'Nebraska', 'Kansas', 'Missouri', 'Iowa', 'Minnesota', 'Wisconsin', 'Illinois', 'Indiana', 'Michigan', 'Ohio') THEN 'Midwest'
+        WHEN state IN ('Maryland', 'Delaware', 'West Virginia', 'Virginia', 'North Carolina', 'South Carolina', 'Georgia', 'Kentucky', 'Florida', 'Tennessee', 'Mississippi', 'Alabama', 'Oklahoma', 'Arkansas', 'Louisiana', 'Texas') THEN 'South'
+        WHEN state IN ('Maine', 'New Hampshire', 'Vermont', 'Massachusetts', 'Connecticut', 'Rhode Island', 'Pennsylvania', 'New Jersey', 'New York') THEN 'Northeast'
+        ELSE 'Missing'
+      END AS region
+  FROM us_arrests
+  ORDER BY region
+    ")
+
+print(df)
+```
+
+You can also use values you create to create aggregated summaries. For example, if you wanted to calculate the average number of murder arrrests in each state contained in a region:
+
+```r
+df <- sqldf("
+  SELECT CASE
+    WHEN state IN ('Hawaii', 'Alaska') THEN 'Pacific'
+    WHEN state IN ('Washington', 'Oregon','California', 'Idaho', 'Montana', 'Wyoming', 'Nevada', 'Utah', 'Colorado', 'Arizona', 'New Mexico') THEN 'West'
+    WHEN state IN ('North Dakota', 'South Dakota', 'Nebraska', 'Kansas', 'Missouri', 'Iowa', 'Minnesota', 'Wisconsin', 'Illinois', 'Indiana', 'Michigan', 'Ohio') THEN 'Midwest'
+    WHEN state IN ('Maryland', 'Delaware', 'West Virginia', 'Virginia', 'North Carolina', 'South Carolina', 'Georgia', 'Kentucky', 'Florida', 'Tennessee', 'Mississippi', 'Alabama', 'Oklahoma', 'Arkansas', 'Louisiana', 'Texas') THEN 'South'
+    WHEN state IN ('Maine', 'New Hampshire', 'Vermont', 'Massachusetts', 'Connecticut', 'Rhode Island', 'Pennsylvania', 'New Jersey', 'New York') THEN 'Northeast'
+    ELSE 'Missing'
+    END AS region
+    , max(Murder) as max_murder
+  FROM us_arrests
+  GROUP BY region
+  ORDER BY max_murder DESC
+  -- 4 observations
+  -- The South contains the state with the highest arrests for murder.
+  ")
+print(df)
+```
+
+Finally, you can use CASE..WHEN inside a function to create variables whose values are conditional:
+
+```r
+df <- sqldf("
+  SELECT 'murders' as arrests
+    , min(CASE WHEN state IN ('Washington', 'Oregon','California', 'Idaho', 'Montana', 'Wyoming', 'Nevada', 'Utah', 'Colorado', 'Arizona', 'New Mexico') THEN Murder ELSE NULL END) as min_west_murders
+    , min(CASE WHEN state IN ('Maine', 'New Hampshire', 'Vermont', 'Massachusetts', 'Connecticut', 'Rhode Island', 'Pennsylvania', 'New Jersey', 'New York') THEN Murder ELSE NULL END) as min_northeast_murders
+    , min(CASE WHEN state IN ('Maryland', 'Delaware', 'West Virginia', 'Virginia', 'North Carolina', 'South Carolina', 'Georgia', 'Kentucky', 'Florida', 'Tennessee', 'Mississippi', 'Alabama', 'Oklahoma', 'Arkansas', 'Louisiana', 'Texas') THEN Murder ELSE NULL END) as min_south_murders
+    , min(CASE WHEN state IN ('Washington', 'Oregon','California', 'Idaho', 'Montana', 'Wyoming', 'Nevada', 'Utah', 'Colorado', 'Arizona', 'New Mexico') THEN Murder ELSE NULL END) as min_midwest_murders
+    , min(CASE WHEN state IN ('Hawaii', 'Alaska') THEN Murder ELSE NULL END) as min_pacific_murders
+  FROM us_arrests
+  GROUP BY arrests
+  -- 1 observation
+")
+```
 
 ## Analyze
 #### Frequencies
 Frequencies are commonly used to understand the contents of the data. These can be calculated in SQL using the GROUP BY keyword. The GROUP BY keyword indicates the level at which calculated variables should be aggregated. Frequencies are calculated using the "count" function. While you can name the resulting variable anything, it is best practice to name variables in a way that makes it easy for others to understand. 
 
-A variable name is assigned using "as *new_variable_name"
+A variable name is assigned using "as *new_variable_name*"
 
 ```r
 x <- USArrests %>%
