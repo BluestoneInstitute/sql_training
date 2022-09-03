@@ -178,7 +178,7 @@ A JOIN (aka merge) of two datasets is another way to combine datasets in SQL. Th
   <img src="https://www.w3schools.com/sql/img_fulljoin.gif" alt="Venn Diagram - FULL (OUTER) JOIN">
 </p>
 
-##### Notes: https://www.w3schools.com/sql/sql_join.asp.
+##### Source: https://www.w3schools.com/sql/sql_join.asp.
 
 You will use a different type of JOIN depending upon what you want to accomplish. To illustrate the differences, we will again divide the USArrests data into two parts. This time, however, we will keep the fields State and Murder in first30 and the fields State and Assault in last30. Because State is the common variable, that is variable on which we JOIN the datasets together.
 
@@ -256,7 +256,7 @@ full_join <- sqldf("
 JOINS can have additional functionality by including either INNER or OUTER to JOIN along with a few other conditions. Illustrations of this can be found in the graphic below.
 
 <p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/SQL_Joins.svg" alt="Venn Diagram of SQL Joins">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/SQL_Joins.svg" alt="Venn Diagram of SQL Joins" width = 75% height=auto>
 </p>
 
 
