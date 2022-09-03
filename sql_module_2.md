@@ -154,18 +154,36 @@ stack_unionall <- sqldf("
 ### JOINs
 A JOIN (aka merge) of two datasets is another way to combine datasets in SQL. There are multiple different types of joins:
 
-JOIN [[]]
-LEFT JOIN [[]]
-RIGHT JOIN [[]]
-FULL JOIN [[]]
-
-It is easy to understand the differences with a Venn diagram.
+* LEFT JOIN - Likely this will be the JOIN used most frequently. Returns all rows from the left table, and the matching rows from the right table. 
 
 <p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/SQL_Joins.svg" alt="Venn Diagram of SQL Joins" width = "300" height="auto">
+  <img src="https://www.w3schools.com/sql/img_leftjoin.gif" alt="Venn Diagram - LEFT JOIN" width = "400" height="auto">
 </p>
 
-You will use a different type of JOIN depending upon what you want to accomplish. To illustrate, we will again divide the USArrests data into two parts. This time, however, we will keep the fields State and Murder in first30 and the fields State and Assault in last30. Because State is the common variable, that is variable on which we JOIN the datasets together.
+* RIGHT JOIN - Returns all rows from the right table, and the matching rows from the left table.
+
+<p align="center">
+  <img src="https://www.w3schools.com/sql/img_rightjoin.gif" alt="Venn Diagram - RIGHT JOIN" width = "400" height="auto">
+</p>
+
+* JOIN - Joins tables together
+
+<p align="center">
+  <img src="https://www.w3schools.com/sql/img_innerjoin.gif" alt="Venn Diagram - JOIN" width = "400" height="auto">
+</p>
+
+* FULL OUTER JOIN - Returns all rows when there is a match in either left table or right table.
+
+<p align="center">
+  <img src="https://www.w3schools.com/sql/img_fulljoin.gif" alt="Venn Diagram - FULL (OUTER) JOIN" width = "400" height="auto">
+</p>
+
+##### Notes: https://www.w3schools.com/sql/sql_join.asp.
+
+You will use a different type of JOIN depending upon what you want to accomplish. To illustrate the differences, we will again divide the USArrests data into two parts. This time, however, we will keep the fields State and Murder in first30 and the fields State and Assault in last30. Because State is the common variable, that is variable on which we JOIN the datasets together.
+
+> **BEST PRACTICE NOTE:**
+> You can assign "nicknames" to a dataset and use that nickname to specify the source for each column. For example, "FROM first30 as a LEFT JOIN last30 as b" assigns the nicknames "a" to the first30 dataset and "b" to the last30 dataset. To specify a variable contained in first30 you would type "a.Murder." To specify a variable contained in last30 you would type "b.Assault."
 
 ```r
 library(sqldf)
@@ -178,20 +196,69 @@ us_arrests <- USArrests %>%
 first30 <- us_arrests %>% select (State, Murder) %>% slice_head(n=30) %>% arrange(State)
 last30 <- us_arrests %>% select (State, Assault) %>% slice_tail(n=30) %>% arrange(State)
 
-# FULL JOIN
-
 # LEFT JOIN
+  left_join <- sqldf("
+    SELECT a.State
+      , a.Murder
+      , b.Assault
+    FROM first30 as a LEFT JOIN last30 as b
+    ON a.State = b.State
+    -- 30 observations, 3 variables
+    -- limited to records appearing in first30
+    ")
+
+  # States in both first30 and last30 have values for Assault. 
+  # States only appearing in first30 have "NA" in the Assault column since those data were not available in last30.
 
 # RIGHT JOIN
+  right_join <- sqldf("
+      SELECT b.State
+        , a.Murder
+        , b.Assault
+      FROM first30 as a RIGHT JOIN last30 as b
+      ON a.State = b.State
+      -- 30 observations, 3 variables
+      -- limited to records appearing in last30
+      ")
+  # States in both first30 and last30 have values for Assault. 
+  # States only appearing in last30 have "NA" in the Murder column since those data were not available in last30.
 
-# INNER JOIN
 
-# OUTER JOIN
+# JOIN
+join <- sqldf("
+    SELECT a.State
+      , a.Murder
+      , b.Assault
+    FROM first30 as a JOIN last30 as b
+    ON a.State = b.State
+    -- 10 observations, 3 variables
+    -- contains records appearing in both first30 and last30
+    ")
 
-[[fill in]]
+  # All observations contain values for Murder and Assault because all information is available for overlapping states.
+
+# FULL JOIN
+full_join <- sqldf("
+    SELECT a.State
+      , a.Murder
+      , b.Assault
+    FROM first30 as a FULL JOIN last30 as b
+    ON a.State = b.State
+    -- 50 observations, 3 variables
+    -- contains records appearing in either first30 and last30, but combines records for overlapping states.
+    ")
+
+  # Overlapping states have values for Murder and Assault.
+  # States only appearing in first30 have values for Murder but not Assault.
+  # States only appearing in last30 have values for Assault but not Murder.
+
 ```
+JOINS can have additional functionality by including either INNER or OUTER to JOIN along with a few other conditions. Illustrations of this can be found in the graphic below.
 
-By including INNER or OUTER in the JOIN you specify whether or not to include the overlapping portion of the Venn diagram
+<p align="center">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/SQL_Joins.svg" alt="Venn Diagram of SQL Joins" width = "500" height="auto">
+</p>
+
 
 ## Wrangle
 #### Creating Subsets of Data
