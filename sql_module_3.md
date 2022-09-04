@@ -31,7 +31,7 @@ In other words, a relational database is a type of database where two or more ta
 ##### Source: “A Quick-Start Tutorial on Relational Database Design,” https://www3.ntu.edu.sg/home/ehchua/programming/sql/Relational_Database_Design.html.
 
 To save storage space, the table Classes does not also include the teacher name, office, phone, email, etc. Likewise, to save storage space, the table Teachers does not include courseCode, dayOfWeek, timeStart, timeEnd, etc. 
-If, for example, the data analyst only wanted to analyze Class schedules, they would not have to touch the data in the Teachers table. Similarly, if the data analyst only wanted to analyze Teacher information, they would not have to touch the data in the Teachers table. Often. However, a data analyst will want to combine information from Teachers and Classes to create a summary.
+If, for example, the data analyst only wanted to analyze Class schedules, they would not have to touch the data in the Teachers table. Similarly, if the data analyst only wanted to analyze Teacher information, they would not have to touch the data in the Teachers table. Often, however, a data analyst will want to combine information from Teachers and Classes to create a summary.
 
 #### Example: Identify Courses and Teacher Names for Classes Taught on Wednesdays
 ```SQL
