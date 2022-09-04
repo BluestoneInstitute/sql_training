@@ -1,6 +1,6 @@
 # SQL Module 2:  Using SQL in R’s sqldf Package 
 
-The examples and sample code shown throughout the SQL Modules can typically be adapted to other software that includes SQL (e.g., Microsoft SQL Server) with just a few changes.  This is because many “flavors” of SQL are based on T-SQL or “Transact-SQL.” This SQL module will focus on the version of SQL used in R’s sqldf package. 
+The examples and sample code shown throughout the SQL Modules can typically be adapted to other software that includes SQL (e.g., Microsoft SQL Server) with just a few changes.  This is because many “flavors” of SQL are based on T-SQL or “Transact-SQL.” This SQL module will focus on the version of SQL used in R’s sqldf package which generally follows T-SQL syntax.
 
 The next section of the module introduces the sqldf package in R. It then (re)introduces the Data Analyst's Workflow. The remaining sections of this module will follow the Data Analyst's Workflow to introduce basic SQL concepts. By the end of this module you should be able to query an R dataframe using SQL statements.
 
@@ -90,11 +90,103 @@ The true workflow is not as linear as the figure implies.  Nevertheless, it prov
 Programming often follows the Pareto Principle:  80% of the work can be done by 20% (or less) of the available features.  This module is designed to introduce the fewest number of concepts necessary to be proficient on the vast majority of tasks.
 
 ## Import
-Because sqldf uses dataframes you will likely first import your data through R packages like read_csv or read_tsv. However, you may not always use SQL in R so it is useful to understand how to add data using SQL syntax.
+When using sqldf, you will likely first import your data through R packages like read_csv or read_tsv. sqldf has its own function to import data, read.csv.sql. The function is unique to sqldf and will not translate to other versions of SQL. After briefly introducing read.csv.sql this module will cover importing data through SQL's INSERT function. 
 
-### Inserting Data into a SQL Database
+### read.csv.sql
 
-[[fill]]
+Within read.csv.sql we specify the file to be imported and then include a SELECT statement. Because data are loaded using SQL syntax, it is possible to the WHERE keyword to limit which observations are imported.
+
+By default, read.csv.sql assumes the delimiter (i.e., the character that separates the fields) is a commma. sqlDF also has read.csv2.sql where the default delimeter is a semicolon. read.csv2.sql translates all commas in the raw data to be decimal points. Of these two options read.csv.sql is generally preferred to read.csv2.sql.
+
+```r
+# first create a csv file using the iris database that is included in base R.
+
+write.csv(iris, "iris.csv", quote = FALSE, row.names = TRUE)
+
+# second use read.csv.sql to import the csv.
+
+iris2 <- read.csv.sql(file = "iris.csv", 
+                      sql = "SELECT * FROM file WHERE Species = 'setosa' ", 
+                      header = TRUE,
+                      sep = ',')
+
+# 'file' specifies the file to import
+# 'sql' specifies the SQL query
+# 'header specifies that the first row of the raw data contains field names
+# 'sep' specifies the delimiter (aka separator)
+```
+
+SQL packages like MS SQL Server uses BULK INSERT to import raw data into a SQL table. BULK INSERT will be covered in the next module.
+
+#### INSERT INTO
+Occassionally, you will want to add data lines to an existing SQL table. This can be done with the INSERT statement. In the first example, we will insert two new lines of made up data to the mtcars dataset using INSERT.
+
+```r
+library(dplyr)
+library(tibble)
+library(sqldf)
+
+# limit df to having 2 variables, car_name and mpg.
+df <- mtcars %>%
+  rownames_to_column(var = "car_name") %>%
+  select(car_name, mpg)
+nrow(df)
+# 32 observations
+
+# INSERT Jeep Cherokee with mpg of 23. Return the updated dataset with SELECT
+insert_into <- sqldf(c("INSERT INTO df VALUES ('JEEP Cherokee', 23)",
+                       "INSERT INTO df VALUES ('Yugo', 19)",
+                       "SELECT * FROM df")
+                    )
+nrow(insert_into)
+# 34 observations
+```
+
+A few things to note from the above:
+1. Each new row of data requires its own INSERT statement.
+2. INSERT alone will not return a data set. We need to include as a final SQL statement 
+```r
+"SELECT * FROM df"
+```
+3. Because we are submitting 3 SQL statements in one sqldf function we must combine them using c().
+4. We can ignore (for now) the warning message that R will return after the code is submitted.
+```r
+Warning messages:
+1: In result_fetch(res@ptr, n = n) :
+  SQL statements must be issued with dbExecute() or dbSendStatement() instead of dbGetQuery() or dbSendQuery().
+```
+
+The above was somewhat contrived. A more common use case would be to include summary information at the bottom of the table.
+
+
+```r
+library(dplyr)
+library(tibble)
+library(sqldf)
+
+# limit df to having 2 variables, car_name and mpg.
+df <- mtcars %>%
+  rownames_to_column(var = "car_name") %>%
+  select(car_name, mpg)
+nrow(df)
+# 32 observations
+
+# create data frame, mean_df that contains the average mpg for all cars
+mean_df <- as.data.frame(cbind('Average', mean(df$mpg)))
+colnames(mean_df) <- c('car_name', 'mpg')
+# 1 observation
+
+# INSERT mean_df as the last row of df
+summary_df <- sqldf(c("INSERT INTO df SELECT * FROM mean_df",
+                      "SELECT * FROM df")
+)
+nrow(summary_df)
+# 33 observations
+print(summary_df)
+```
+
+> **BEST PRACTICE NOTE:**
+> There are still better ways than sqldf to do this in R, rbind for example. There are also better ways to do this in SQL (e.g., UNION and UNION ALL).
 
 ## Wrangle
 ### Stacking Data with UNION and UNION ALL
@@ -460,19 +552,10 @@ print(freq_murder)
 
 SQL is a querying language. It does not, by itself, have graphics or visualization capabilities. For this reason, output of a SQL query is often “moved” to a different software package (e.g., ggplot2 in R, or Excel) to communicate the results.
 
-That said, sometimes you will want to share the SQL code and the raw output. To do that, you'll want to make sure your program (or script) is saved to a file, comments are included in your code, and conclusions drawn are included as comments.
+That said, sometimes you will want to share the SQL code and the raw output. To do that, you'll want to make sure your program (aka "script") is saved to a file, comments are included in your code, and conclusions drawn are included as comments.
 
 > **BEST PRACTICE:**
 > When writing SQL code (or for any coding language) keep in mind the following best practices:
 > -   Always save your SQL queries in a program or "script"
 > -   Include comments throughout the script to explain what each individual query does
 > -   After each query in a script include a comment for results and/or conclusions
-
-## Other SQL Concepts (Optional)
-
-The HAVING clause was added to SQL because the WHERE keyword cannot be used with aggregate functions.
-HAVING - command is used instead of WHERE with aggregate functions
-[[fill in]]
-
-
-Source: https://www.w3schools.com/sql/sql_quickref.asp
