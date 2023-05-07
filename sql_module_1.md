@@ -3,7 +3,7 @@
 Structured Query Language or “SQL” is a scripting language used to query databases. Invented in the 1970s by IBM, it is now ubiquitous with versions available in statistical software like SAS (PROC SQL) and R (sqldf). Other software like Stata (odbc) and Python (pyodbc) allow you to connect to a SQL server and run queries on the data stored there. These are not the only use cases for SQL; there are many, many more. 
 
 ### Videos
-* [What is SQL? SQL for Beginners 2022 – Learn SQL Step by Step](https://www.youtube.com/watch?v=dFywO9lQ6MQ) (59 seconds)
+* [SQL Explained in 100 Seconds](https://www.youtube.com/watch?v=zsjvFFKOm3c) (2:22)
 
 ### Basics SQL Syntax
 SQL is a pretty intuitive language. You basically type what you're thinking. There are 3 main keywords included as part of a SQL query:
